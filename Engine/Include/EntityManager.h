@@ -18,7 +18,7 @@ namespace Mini
 		EntityManager();
 		~EntityManager();
 
-		int_entityID CreateEntity(size_t systemCount, const char* name);
+		int_entityID CreateEntity(const char* name);
 		void DestroyEntity(int_entityID entityID);
 		EntityData* GetEntityData(int_entityID entityID);
 		

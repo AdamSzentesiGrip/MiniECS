@@ -41,17 +41,13 @@ namespace Mini
 			return componentID;
 		}
 
-		bool HasComponentKey(EntityData* entityData, componentKey componentKey);
 		bool HasComponent(EntityData* entityData, int_componentID componentID);
-
-		void AddComponent(EntityData* entityData, ComponentBase& component, size_t hashCode);
-		ComponentBase* GetComponent(EntityData* entityData, size_t hashCode);
-		ComponentBase* GetComponentFromID(EntityData* entityData, int_componentID componentID);
+		void AddComponent(EntityData* entityData, ComponentBase& component, int_componentID componentID);
+		ComponentBase* GetComponent(EntityData* entityData, int_componentID componentID);
 		int_entityID RemoveComponent(size_t index, int_componentID componentID);
 
 		int_componentID GetComponentID(size_t componentHashCode);
-		componentKey GetComponentKeyFromID(int_componentID componentID);
-		const char* GetComponentTypeName(int_componentID componentID);
+		componentKey GetComponentKey(int_componentID componentID);
 		bool RemoveComponentKey(EntityData* entityData, int_componentID componentID);
 
 		template<typename ComponentType> std::vector<ComponentType>* GetComponents(int_componentID componentID)
@@ -59,11 +55,15 @@ namespace Mini
 			return ((ComponentBuffer<ComponentType>*)(_ComponentBuffers->at(componentID)))->GetComponents();
 		}
 
+		// DEBUG
+
+		const char* GetComponentTypeName(int_componentID componentID);
+
 	private:
+		bool HasComponentKey(EntityData* entityData, componentKey componentKey);
 		bool IsRegistered(size_t hashCode);
 		void RegisterComponentType(ComponentBufferBase* componentBuffer);
 		bool AddComponentKey(EntityData* entityData, int_componentID componentID);
-		componentKey GetComponentKey(size_t componentHashCode);
 
 	};
 

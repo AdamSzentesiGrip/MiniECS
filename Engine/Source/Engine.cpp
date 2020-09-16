@@ -16,41 +16,25 @@ namespace Mini
 		delete _ComponentManager;
 	}
 
-	void Engine::UpdateSystems()
-	{
-		LOG("");
-		LOG("UPDATE:");
-		_SystemManager->UpdateSystems();
-	}
-
 	// ENTITIES
 
 	int_entityID Engine::CreateEntity(const char* name)
 	{
-		return _EntityManager->CreateEntity(_SystemManager->GetSystemCount(), name);
+		return _EntityManager->CreateEntity(name);
 	}
 
 	void Engine::DestroyEntity(int_entityID entityID)
 	{
-		ApplyOnAllComponents(entityID, &Engine::RemoveComponent);
+		EntityData* entityData = _EntityManager->GetEntityData(entityID);
+
+		ApplyOnAllComponents(entityData, &Engine::RemoveComponent);
 		_EntityManager->DestroyEntity(entityID);
 	}
 
-	void Engine::ApplyOnAllComponents(int_entityID entityID, void (Engine::* func) (int_entityID, int_componentID))
-	{
-		// This is weird but helps to iterate any valid int (ie. uint8 has GetMaxComponentID() = 256, for loop would fail to infinite loop on 255)
-		int_componentID componentID = 0;
-		do
-		{
-			(this->*func)(entityID, componentID);
-			componentID++;
-		} while (componentID > 0 && componentID < GetMaxComponentID());
-	}
+	// COMPONENTS
 
-	void Engine::RemoveComponent(int_entityID entityID, int_componentID componentID)
+	void Engine::RemoveComponent(EntityData* entityData, int_componentID componentID)
 	{
-		EntityData* entityData = _EntityManager->GetEntityData(entityID);
-
 		if (!_ComponentManager->RemoveComponentKey(entityData, componentID)) return;
 
 		size_t index = entityData->ComponentIndices[componentID];
@@ -59,28 +43,42 @@ namespace Mini
 		movedComponentEntityData->ComponentIndices[componentID] = index;
 	}
 
-	// DEBUG
-
-	bool Engine::HasComponent(int_entityID entityID, int_componentID componentID)
+	void Engine::ApplyOnAllComponents(EntityData* entityData, void (Engine::* func) (EntityData*, int_componentID))
 	{
-		EntityData* entityData = _EntityManager->GetEntityData(entityID);
-
-		return _ComponentManager->HasComponent(entityData, componentID);
+		// This is weird but helps to iterate any valid int (ie. uint8 has GetMaxComponentID() = 256, for loop would fail to infinite loop on 255)
+		int_componentID componentID = 0;
+		do
+		{
+			(this->*func)(entityData, componentID);
+			componentID++;
+		} while (componentID > 0 && componentID < GetMaxComponentID());
 	}
+
+	// SYSTEMS
+
+	void Engine::UpdateSystems()
+	{
+		LOG("");
+		LOG("UPDATE:");
+		_SystemManager->UpdateSystems();
+	}
+
+	// DEBUG
 
 	void Engine::DebugEntity(int_entityID entityID)
 	{
 		LOG("");
 		LOG("DEBUG ENTITY: " << _EntityManager->GetEntityData(entityID)->Name);
 
-		ApplyOnAllComponents(entityID, &Engine::DebugComponent);
+		EntityData* entityData = _EntityManager->GetEntityData(entityID);
+
+		ApplyOnAllComponents(entityData, &Engine::DebugComponent);
 	}
 
-	void Engine::DebugComponent(int_entityID entityID, int_componentID componentID)
+	void Engine::DebugComponent(EntityData* entityData, int_componentID componentID)
 	{
-		if (!HasComponent(entityID, componentID)) return;
+		if (!_ComponentManager->HasComponent(entityData, componentID)) return;
 
-		EntityData* entityData = _EntityManager->GetEntityData(entityID);
 		LOG(" - COMPONENT: " << _ComponentManager->GetComponentTypeName(componentID) << " ON INDEX " << entityData->ComponentIndices[componentID]);
 	}
 

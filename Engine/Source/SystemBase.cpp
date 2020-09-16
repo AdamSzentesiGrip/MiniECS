@@ -22,7 +22,7 @@ namespace Mini
 
 	void SystemBase::RegisterComponentTypeInternal(int_componentID componentID)
 	{
-		*_ComponentKey |= _ComponentManager->GetComponentKeyFromID(componentID);
+		*_ComponentKey |= _ComponentManager->GetComponentKey(componentID);
 	}
 
 	const char* SystemBase::GetName()

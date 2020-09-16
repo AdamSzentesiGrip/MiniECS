@@ -14,7 +14,7 @@ namespace Mini
 		delete _AvailableEntityIndices;
 	}
 
-	int_entityID EntityManager::CreateEntity(size_t systemCount, const char* name)
+	int_entityID EntityManager::CreateEntity(const char* name)
 	{
 		int_entityID entityID;
 

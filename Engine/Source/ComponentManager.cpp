@@ -33,9 +33,8 @@ namespace Mini
 		return;
 	}
 
-	void ComponentManager::AddComponent(EntityData* entityData, ComponentBase& component, size_t hashCode)
+	void ComponentManager::AddComponent(EntityData* entityData, ComponentBase& component, int_componentID componentID)
 	{
-		int_componentID componentID = GetComponentID(hashCode);
 		component._EntityData = entityData;
 
 		if (AddComponentKey(entityData, componentID))
@@ -52,20 +51,13 @@ namespace Mini
 		}
 	}
 
-	ComponentBase* ComponentManager::GetComponentFromID(EntityData* entityData, int_componentID componentID)
+	ComponentBase* ComponentManager::GetComponent(EntityData* entityData, int_componentID componentID)
 	{
 		if (!HasComponent(entityData, componentID)) return nullptr;
 
 		LOG("GET COMPONENT FROM ENTITY " << (int)entityData->EntityID << ": " << GetComponentTypeName(componentID));
 
 		return (*_ComponentBuffers)[componentID]->GetComponent(entityData->ComponentIndices[componentID]);
-	}
-
-	ComponentBase* ComponentManager::GetComponent(EntityData* entityData, size_t hashCode)
-	{
-		int_componentID componentID = GetComponentID(hashCode);
-
-		return GetComponentFromID(entityData, componentID);
 	}
 
 	int_entityID ComponentManager::RemoveComponent(size_t index, int_componentID componentID)
@@ -80,14 +72,7 @@ namespace Mini
 		return _ComponentIDRegister->at(componentHashCode);
 	}
 
-	componentKey ComponentManager::GetComponentKey(size_t componentHashCode)
-	{
-		componentKey result = 1;
-		result <<= GetComponentID(componentHashCode);
-		return result;
-	}
-
-	componentKey ComponentManager::GetComponentKeyFromID(int_componentID componentID)
+	componentKey ComponentManager::GetComponentKey(int_componentID componentID)
 	{
 		componentKey componentKey = 1;
 		componentKey <<= componentID;
@@ -101,13 +86,12 @@ namespace Mini
 
 	bool ComponentManager::HasComponent(EntityData* entityData, int_componentID componentID)
 	{
-		return HasComponentKey(entityData, GetComponentKeyFromID(componentID));
+		return HasComponentKey(entityData, GetComponentKey(componentID));
 	}
 
 	bool ComponentManager::AddComponentKey(EntityData* entityData, int_componentID componentID)
 	{
-		componentKey componentKey = 1;
-		componentKey <<= componentID;
+		componentKey componentKey = GetComponentKey(componentID);
 
 		if(HasComponentKey(entityData, componentKey))
 		{
@@ -121,8 +105,7 @@ namespace Mini
 
 	bool ComponentManager::RemoveComponentKey(EntityData* entityData, int_componentID componentID)
 	{
-		componentKey componentKey = 1;
-		componentKey <<= componentID;
+		componentKey componentKey = GetComponentKey(componentID);
 
 		if (!HasComponentKey(entityData, componentKey))
 		{
