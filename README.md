@@ -14,7 +14,8 @@ Premake5 is used to create the solution files and build setup. For simplest buil
 - open **MiniEngine.sln** and build the **Game** project
 
 ### MacOS - XCode
-- copy **premake5** to repository root and run **premake5.command** $ sh premake.command
+- copy **premake5** to repository root and run **premake5.command**:
+  - $ sh premake.command
 - open **MiniEngine.xcworkspace** and build the **Game** project
 
 Executables will be placed in **(solution root)/_exe/(build configuration)/**
