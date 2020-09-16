@@ -1,0 +1,2 @@
+# MiniECS
+Naive ECS implementation
