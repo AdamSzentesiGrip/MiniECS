@@ -2,6 +2,7 @@ if os.host() == "linux" then
    require "codeblocks"
 end
 
+
 workspace "MiniECS"
 
 	architecture "x64"

@@ -1,0 +1,23 @@
+# General
+
+_bin/
+_obj/
+_exe
+
+# VisualStudio
+
+.vs/
+
+*.user
+*.pbxproj
+*.plist
+*.xcworkspacedata
+*.xcuserstate
+*.vcxproj
+*.vcxproj.filters
+*.sln
+
+# Premake5
+
+premake5
+premake5.exe
