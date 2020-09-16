@@ -60,6 +60,7 @@ namespace Mini
 	{
 		LOG("");
 		LOG("UPDATE:");
+
 		_SystemManager->UpdateSystems();
 	}
 
@@ -79,7 +80,7 @@ namespace Mini
 	{
 		if (!_ComponentManager->HasComponent(entityData, componentID)) return;
 
-		LOG(" - COMPONENT: " << _ComponentManager->GetComponentTypeName(componentID) << " ON INDEX " << entityData->ComponentIndices[componentID]);
+		LOG(" COMPONENT: " << _ComponentManager->GetComponentTypeName(componentID) << " ON INDEX " << entityData->ComponentIndices[componentID]);
 	}
 
 }

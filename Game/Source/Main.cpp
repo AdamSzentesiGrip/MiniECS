@@ -52,9 +52,6 @@ int main()
 
 	// DEBUG
 
-	LOG("RESULT e1: " << (int)engine.GetComponent<StupidComponent>(entity1)->CharValue);
-	LOG("RESULT e2: " << (int)engine.GetComponent<StupidComponent>(entity2)->CharValue);
-
 	engine.DebugEntity(entity0);
 	engine.DebugEntity(entity1);
 	engine.DebugEntity(entity2);
@@ -62,15 +59,16 @@ int main()
 	// UPDATE
 
 	engine.UpdateSystems();
-
 	engine.UpdateSystems();
 
+	LOG("");
 	GameComponent gc1;
 	gc1.IntValue = 987;
 	engine.AddComponent(entity1, gc1);
 
 	engine.UpdateSystems();
 
+	LOG("");
 	engine.RemoveComponent<GameComponent>(entity0);
 	engine.RemoveComponent<StupidComponent>(entity0);
 
@@ -80,19 +78,13 @@ int main()
 
 	engine.DebugEntity(entity0);
 
-	LOG("RESULT e1: " << (int)engine.GetComponent<StupidComponent>(entity1)->CharValue);
-	LOG("RESULT e2: " << (int)engine.GetComponent<StupidComponent>(entity2)->CharValue);
-
+	LOG("");
 	engine.DestroyEntity(entity1);
-
 	engine.UpdateSystems();
 
+	LOG("");
 	int_entityID boobs = engine.CreateEntity("Boobs");
-
 	engine.DebugEntity(boobs);
-
-	char c;
-	std::cin >> c;
 
 	return 0;
 }

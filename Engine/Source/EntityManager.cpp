@@ -31,13 +31,13 @@ namespace Mini
 			(*_EntityData)[entityID]->Init(entityID, name);
 		}
 		
-		LOG("CRE ENTITIY " << entityID << ": " << name);
+		LOG("CRE + ENTITIY " << entityID << ": " << name);
 		return entityID;
 	}
 
 	void EntityManager::DestroyEntity(int_entityID entityID)
 	{
-		LOG("DES ENTITIY " << entityID << ": " << (*_EntityData)[entityID]->Name);
+		LOG("DES - ENTITIY " << entityID << ": " << (*_EntityData)[entityID]->Name);
 
 		_AvailableEntityIndices->push_back(entityID);
 	}

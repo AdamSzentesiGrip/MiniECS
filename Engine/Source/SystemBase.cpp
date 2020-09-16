@@ -16,7 +16,8 @@ namespace Mini
 
 	void SystemBase::UpdateBase()
 	{
-		LOG(" - PROCESS: " << GetName());
+		LOG(" PROCESS: " << GetName());
+
 		Process(_ComponentManager);
 	}
 

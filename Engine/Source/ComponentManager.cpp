@@ -25,7 +25,7 @@ namespace Mini
 		size_t componentHashCode = componentBuffer->GetComponentHashCode();
 		const char* componentName = componentBuffer->GetComponentName();
 
-		LOG("REG COMPONENT " << static_cast<uint32_t>(componentID) << ": " << componentName);
+		LOG("REG   COMPONENT " << static_cast<uint32_t>(componentID) << ": " << componentName);
 
 		_ComponentIDRegister->insert({ componentHashCode, componentID });
 		_ComponentBuffers->push_back(componentBuffer);
@@ -39,13 +39,13 @@ namespace Mini
 
 		if (AddComponentKey(entityData, componentID))
 		{
-			LOG("ADD COMPONENT TO ENTITY " << (int)entityData->EntityID << ": " << GetComponentTypeName(componentID));
+			LOG("ADD + COMPONENT TO ENTITY " << (int)entityData->EntityID << ": " << GetComponentTypeName(componentID));
 
 			entityData->ComponentIndices[componentID] = (*_ComponentBuffers)[componentID]->AddComponent(component);
 		}
 		else
 		{
-			LOG("UPD COMPONENT ON ENTITY " << (int)entityData->EntityID << ": " << GetComponentTypeName(componentID));
+			LOG("UPD   COMPONENT ON ENTITY " << (int)entityData->EntityID << ": " << GetComponentTypeName(componentID));
 
 			(*_ComponentBuffers)[componentID]->UpdateComponent(entityData->ComponentIndices[componentID], component);
 		}
@@ -55,14 +55,14 @@ namespace Mini
 	{
 		if (!HasComponent(entityData, componentID)) return nullptr;
 
-		LOG("GET COMPONENT FROM ENTITY " << (int)entityData->EntityID << ": " << GetComponentTypeName(componentID));
+		LOG("GET < COMPONENT FROM ENTITY " << (int)entityData->EntityID << ": " << GetComponentTypeName(componentID));
 
 		return (*_ComponentBuffers)[componentID]->GetComponent(entityData->ComponentIndices[componentID]);
 	}
 
 	int_entityID ComponentManager::RemoveComponent(size_t index, int_componentID componentID)
 	{
-		LOG("REM COMPONENT FROM ENTITY " << (int)index << ": " << GetComponentTypeName(componentID));
+		LOG("REM - COMPONENT FROM ENTITY " << (int)index << ": " << GetComponentTypeName(componentID));
 
 		return (*_ComponentBuffers)[componentID]->RemoveComponent(index);
 	}

@@ -8,9 +8,7 @@ namespace Mini
 
 	void EngineSystem::Process(EngineComponent& component)
 	{
-		LOG("  - float value: " << component.FloatValue);
-		
+		LOG("  float value: " << component.FloatValue);
 	}
-
 
 }
