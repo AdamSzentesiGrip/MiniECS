@@ -24,8 +24,6 @@ namespace Mini
 
 		template<typename ComponentType> int_componentID RegisterComponentType()
 		{
-			static_assert(std::is_base_of<ComponentBase, ComponentType>::value, "ComponentManager.RegisterComponentType<ComponentType> ComponentType must be a Mini::Component derivative");
-
 			size_t componentHashCode = typeid(ComponentType).hash_code();
 			const char* componentName = typeid(ComponentType).name();
 

@@ -21,7 +21,6 @@ namespace Mini
 		template<typename SystemType>
 		void AddSystem(ComponentManager* componentManager)
 		{
-			static_assert(std::is_base_of<SystemBase, SystemType>::value, "SystemManager.AddSystem<SystemType> SystemType must be a Mini::System derivative");
 			AddSystemInternal(componentManager, new SystemType(), typeid(SystemType).name());
 		}
 

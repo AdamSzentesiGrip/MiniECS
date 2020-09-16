@@ -21,11 +21,15 @@ namespace Mini
 		// ENTITIES
 
 		int_entityID CreateEntity(const char* name = "");
+		void DestroyEntity(int_entityID entityID);
+		void ApplyOnAllComponents(int_entityID entityID, void (Engine::* func) (int_entityID, int_componentID));
 
 		// COMPONENTS
 
 		template<typename ComponentType> void RegisterComponentType()
 		{
+			static_assert(std::is_base_of<ComponentBase, ComponentType>::value, "Engine::RegisterComponentType<ComponentType> ComponentType must be a Mini::Component derivative");
+
 			_ComponentManager->RegisterComponentType<ComponentType>();
 		}
 
@@ -50,31 +54,38 @@ namespace Mini
 			static_assert(std::is_base_of<ComponentBase, ComponentType>::value, "Engine::RemoveComponent<ComponentType> ComponentType must be a Mini::Component derivative");
 
 			int_componentID componentID = _ComponentManager->GetComponentID(typeid(ComponentType).hash_code());
-
-			// TODO: hide in impl
-
-			EntityData* entityData = _EntityManager->GetEntityData(entityID);
-
-			if (!_ComponentManager->RemoveComponentKey(entityData, componentID)) return;
-			
-			size_t index = entityData->ComponentIndices[componentID];
-			int_entityID movedComponentEntityID = _ComponentManager->RemoveComponent(index, componentID);
-			EntityData* movedComponentEntityData = _EntityManager->GetEntityData(movedComponentEntityID);
-			movedComponentEntityData->ComponentIndices[componentID] = index;
+			RemoveComponent(entityID, componentID);
 		}
 
 		// SYSTEMS
 
 		void UpdateSystems();
 
-		template<typename ComponentType> void AddSystem()
+		template<typename SystemType> void AddSystem()
 		{
-			_SystemManager->AddSystem<ComponentType>(_ComponentManager);
+			static_assert(std::is_base_of<SystemBase, SystemType>::value, "SystemManager.AddSystem<SystemType> SystemType must be a Mini::System derivative");
+
+			_SystemManager->AddSystem<SystemType>(_ComponentManager);
+		}
+
+		// DEBUG
+
+		void DebugEntity(int_entityID entityID);
+
+	private:
+		void RemoveComponent(int_entityID entityID, int_componentID componentID);
+
+		// TODO: Create rtti with contiguous type indexing
+
+		template<typename ComponentType>
+		int_componentID GetComponentID(size_t componentHashCode)
+		{
+			size_t hashCode = typeid(ComponentType).hash_code();
 		}
 
 		// DEBUG
 
 		bool HasComponent(int_entityID entityID, int_componentID componentID);
-		void DebugEntity(int_entityID entityID);
+		void DebugComponent(int_entityID entityID, int_componentID componentID);
 	};
 }

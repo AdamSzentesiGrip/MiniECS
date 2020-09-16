@@ -83,6 +83,14 @@ int main()
 	LOG("RESULT e1: " << (int)engine.GetComponent<StupidComponent>(entity1)->CharValue);
 	LOG("RESULT e2: " << (int)engine.GetComponent<StupidComponent>(entity2)->CharValue);
 
+	engine.DestroyEntity(entity1);
+
+	engine.UpdateSystems();
+
+	int_entityID boobs = engine.CreateEntity("Boobs");
+
+	engine.DebugEntity(boobs);
+
 	char c;
 	std::cin >> c;
 
