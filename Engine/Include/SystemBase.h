@@ -17,11 +17,11 @@ namespace Mini
 		SystemBase();
 		void InitBase(ComponentManager* componentManager);
 		void UpdateBase();
-		componentKey GetComponentKey() { return *_ComponentKey; }
 
 	protected:
 		virtual void Init() = 0;
 		virtual void RegisterDefaultComponentType() = 0;
+		bool IsEntityCompliant(ComponentBase& component);
 		virtual void Process(ComponentManager* componentManager) = 0;
 		const char* GetName();
 

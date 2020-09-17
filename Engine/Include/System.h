@@ -22,7 +22,13 @@ namespace Mini
 			
 			for (DefaultComponent& component : *components)
 			{
-				Process(component);
+				// TODO: single component type Systems should not filter Entities
+				if (IsEntityCompliant(component))
+				{
+					LOG("  ENTITY: " << component.GetEntityID());
+
+					Process(component);
+				}
 			}
 		}
 

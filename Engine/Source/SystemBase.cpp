@@ -26,6 +26,13 @@ namespace Mini
 		*_ComponentKey |= _ComponentManager->GetComponentKey(componentID);
 	}
 
+	bool SystemBase::IsEntityCompliant(ComponentBase& component)
+	{
+		componentKey entityComponentKey = component.GetEntityComponentKey();
+
+		return ((*_ComponentKey & entityComponentKey) == *_ComponentKey);
+	}
+
 	const char* SystemBase::GetName()
 	{
 		return _Name;

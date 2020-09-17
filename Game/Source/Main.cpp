@@ -7,6 +7,7 @@
 #include "Components/StupidComponent.h"
 #include "Systems/EngineSystem.h"
 #include "Systems/GameSystem.h"
+#include "Systems/StupidSystem.h"
 
 int main()
 {
@@ -22,6 +23,7 @@ int main()
 
 	engine.AddSystem<Mini::EngineSystem>();
 	engine.AddSystem<GameSystem>();
+	engine.AddSystem<StupidSystem>();
 
 	// ENTITIES
 
@@ -59,7 +61,6 @@ int main()
 	// UPDATE
 
 	engine.UpdateSystems();
-	engine.UpdateSystems();
 
 	LOG("");
 	GameComponent gc1;
@@ -73,8 +74,6 @@ int main()
 	engine.RemoveComponent<StupidComponent>(entity0);
 
 	engine.UpdateSystems();
-
-	// DEBUG
 
 	engine.DebugEntity(entity0);
 

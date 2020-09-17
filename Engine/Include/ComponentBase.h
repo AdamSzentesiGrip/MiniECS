@@ -12,7 +12,7 @@ namespace Mini
 		friend class ComponentManager;
 		
 	private:
-		// TODO: this should be direct data (copy from Entity) to speed up iteration
+		// TODO: this MUST be direct data (copy from Entity) to keep iteration contiguous
 		EntityData* _EntityData;
 
 	public:

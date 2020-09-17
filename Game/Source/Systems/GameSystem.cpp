@@ -8,7 +8,5 @@ void GameSystem::Init()
 
 void GameSystem::Process(GameComponent& component)
 {
-	LOG("  int value: " << component.IntValue);
-
 	component.IntValue++;
 }
