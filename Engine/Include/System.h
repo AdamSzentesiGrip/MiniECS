@@ -33,5 +33,6 @@ namespace Mini
 		}
 
 		virtual void Process(DefaultComponent& component) = 0;
+
 	};
 }

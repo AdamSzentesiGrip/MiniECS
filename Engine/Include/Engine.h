@@ -84,7 +84,7 @@ namespace Mini
 		{
 			static_assert(std::is_base_of<SystemBase, SystemType>::value, "SystemManager.AddSystem<SystemType> SystemType must be a Mini::System derivative");
 
-			_SystemManager->AddSystem<SystemType>(_ComponentManager);
+			_SystemManager->AddSystem<SystemType>(_ComponentManager, _EntityManager);
 		}
 
 		// DEBUG

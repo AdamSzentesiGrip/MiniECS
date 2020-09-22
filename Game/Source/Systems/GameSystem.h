@@ -7,6 +7,10 @@
 
 class GameSystem : public Mini::System<GameComponent>
 {
+private:
+	int_componentID _EngineComponentID;
+	int_componentID _StupidComponentID;
+
 public:
 	virtual void Init() override;
 	virtual void Process(GameComponent& component) override;

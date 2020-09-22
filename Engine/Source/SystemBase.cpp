@@ -7,9 +7,10 @@ namespace Mini
 		_ComponentKey = new componentKey();
 	}
 
-	void SystemBase::InitBase(ComponentManager* componentManager)
+	void SystemBase::InitBase(ComponentManager* componentManager, EntityManager* entityManager)
 	{
 		_ComponentManager = componentManager;
+		_EntityManager = entityManager;
 		RegisterDefaultComponentType();
 		Init();
 	}

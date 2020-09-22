@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ComponentManager.h"
+#include "EntityManager.h"
 
 namespace Mini
 {
@@ -10,12 +11,13 @@ namespace Mini
 
 	private:
 		ComponentManager* _ComponentManager;
+		EntityManager* _EntityManager;
 		componentKey* _ComponentKey;
 		const char* _Name;
 
 	public:
 		SystemBase();
-		void InitBase(ComponentManager* componentManager);
+		void InitBase(ComponentManager* componentManager, EntityManager* entityManager);
 		void UpdateBase();
 
 	protected:
@@ -31,6 +33,13 @@ namespace Mini
 			RegisterComponentTypeInternal(componentID);
 			
 			return componentID;
+		}
+
+		template<typename ComponentType>
+		ComponentType* GetComponent(int_entityID entityID, int_componentID compoentID)
+		{
+			EntityData* entityData = _EntityManager->GetEntityData(entityID);
+			return (ComponentType*)_ComponentManager->GetComponent(entityData, compoentID);
 		}
 
 	private:

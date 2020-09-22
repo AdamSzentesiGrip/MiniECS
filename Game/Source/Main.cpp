@@ -27,7 +27,7 @@ int main()
 
 	// ENTITIES
 
-	int_entityID entity0 = engine.CreateEntity();
+	int_entityID entity0 = engine.CreateEntity("First Entity");
 	int_entityID entity1 = engine.CreateEntity("Funny name");
 	int_entityID entity2 = engine.CreateEntity("Very poor name");
 
@@ -39,14 +39,14 @@ int main()
 
 	ec0.FloatValue = 456.123f;
 	engine.AddComponent(entity0, ec0);
-	sc0.CharValue = 4;
+	sc0.CharValue = 123;
 	engine.AddComponent(entity0, sc0);
 	gc0.IntValue = 6;
 	engine.AddComponent(entity0, gc0);
 
 	gc0.IntValue = 321;
 	engine.AddComponent(entity1, gc0);
-	sc0.CharValue = 2;
+	sc0.CharValue = 8;
 	engine.AddComponent(entity1, sc0);
 
 	sc0.CharValue = 50;
@@ -54,18 +54,13 @@ int main()
 
 	// DEBUG
 
-	engine.DebugEntity(entity0);
-	engine.DebugEntity(entity1);
-	engine.DebugEntity(entity2);
+	//engine.DebugEntity(entity0);
+	//engine.DebugEntity(entity1);
+	//engine.DebugEntity(entity2);
 
 	// UPDATE
 
 	engine.UpdateSystems();
-
-	LOG("");
-	GameComponent gc1;
-	gc1.IntValue = 987;
-	engine.AddComponent(entity1, gc1);
 
 	engine.UpdateSystems();
 
@@ -75,7 +70,7 @@ int main()
 
 	engine.UpdateSystems();
 
-	engine.DebugEntity(entity0);
+	//engine.DebugEntity(entity0);
 
 	LOG("");
 	engine.DestroyEntity(entity1);

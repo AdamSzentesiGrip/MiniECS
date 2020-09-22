@@ -19,12 +19,19 @@ namespace Mini
 		size_t GetSystemCount();
 
 		template<typename SystemType>
-		void AddSystem(ComponentManager* componentManager)
+		void AddSystem(ComponentManager* componentManager, EntityManager* entityManager)
 		{
-			AddSystemInternal(componentManager, new SystemType(), typeid(SystemType).name());
+			const char* name = typeid(SystemType).name();
+			SystemBase* system = new SystemType();
+
+			LOG("ADD + SYSTEM TO CUEUE POSITION " << _Systems->size() << ": " << name);
+
+			system->_Name = name;
+			_Systems->push_back(system);
+			system->InitBase(componentManager, entityManager);
 		}
 
-	private:
-		void API AddSystemInternal(ComponentManager* componentManager, SystemBase* system, const char* name);
+	//private:
+	//	void API AddSystemInternal(ComponentManager* componentManager, SystemBase* system, const char* name);
 	};
 }

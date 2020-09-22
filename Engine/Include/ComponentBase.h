@@ -18,6 +18,6 @@ namespace Mini
 	public:
 		int_entityID GetEntityID() { return _EntityData->EntityID; }
 		componentKey GetEntityComponentKey() { return _EntityData->EntityComponentKey; }
-
+		virtual void DebugComponent() = 0;
 	};
 }

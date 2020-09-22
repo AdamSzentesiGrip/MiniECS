@@ -8,6 +8,7 @@ namespace Mini
 
 	void EngineSystem::Process(EngineComponent& component)
 	{
+		component.DebugComponent();
 	}
 
 }
